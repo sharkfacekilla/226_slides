@@ -1,0 +1,77 @@
+def find_maxima(lists: [[int]]) -> [int]:
+    new_lst = []
+    for l in lists:
+        if len(l) > 0:
+            new_lst.append(max(l))
+
+    return new_lst
+
+
+print(find_maxima([[1, 2, 3], [2, 6, 4], [8, 2, 4]]) == [3, 6, 8])
+print(find_maxima([]) == [])
+print(find_maxima([[4]]) == [4])
+print(find_maxima([[]]) == [])
+print(find_maxima([[1, 2, 3], [], [8, 2, 4]]) == [3, 8])
+
+# --------------------------------------------------------------------------------
+
+def find_minima(lists: [[int]]) -> [int]:
+    new_lst = []
+    for l in lists:
+        if len(l) > 0:
+            new_lst.append(min(l))
+
+    return new_lst
+
+
+print(find_minima([[1, 2, 3], [2, 6, 4], [8, 2, 4]]) == [1, 2, 2])
+print(find_minima([]) == [])
+print(find_minima([[4]]) == [4])
+print(find_minima([[]]) == [])
+print(find_minima([[1, 2, 3], [], [8, 2, 4]]) == [1, 2])
+
+# --------------------------------------------------------------------------------
+
+def find_sums(lists: [[int]]) -> [int]:
+    new_lst = []
+    for l in lists:
+        if len(l) > 0:
+            new_lst.append(sum(l))
+
+    return new_lst
+
+
+print(find_sums([[1, 2, 3], [2, 6, 4], [8, 2, 4]]) == [6, 12, 14])
+print(find_sums([]) == [])
+print(find_sums([[4]]) == [4])
+print(find_sums([[]]) == [])
+print(find_sums([[1, 2, 3], [], [8, 2, 4]]) == [6, 14] or find_sums([[1, 2, 3], [], [8, 2, 4]]) == [6, 0, 14])
+
+# --------------------------------------------------------------------------------
+
+from functools import reduce
+
+def find_maximum(lists: [[int]]) -> int:
+    return reduce(lambda x, y: x if x > max(y) else max(y), lists, max(lists[0]))
+
+
+print(find_maximum([[1, 2, 3], [2, 6, 4], [0, 8, 4]]) == 8)
+print(find_maximum([[4]]) == 4)
+
+# --------------------------------------------------------------------------------
+
+def find_minimum(lists: [[int]]) -> int:
+    return reduce(lambda x, y: x if x < min(y) else min(y), lists, min(lists[0]))
+
+
+print(find_minimum([[1, 2, 3], [2, 6, 4, -1], [8, 2, 4]]) == -1)
+print(find_minimum([[4]]) == 4)
+
+# --------------------------------------------------------------------------------
+
+def find_sum(lists: [[int]]) -> int:
+    return reduce(lambda x, y: x + sum(y), lists, 0)
+
+
+print(find_sum([[1, 2, 3], [2, 6, 4, 1], [8, 2, 4]]) == 33)
+print(find_sum([[4]]) == 4)

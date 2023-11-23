@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html><head></head><body style="color: rgb(32, 33, 34); font-family: verdana, sans-serif; font-size: 12px;"><p>def generate_diagonals(n: int) -&gt; [str]:</p>
+<p>&nbsp; &nbsp; if n &lt; 1:</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; return []</p>
+<p></p>
+<p>&nbsp; &nbsp; board = [['-' for _ in range(n)] for _ in range(n)]</p>
+<p>&nbsp; &nbsp; for i in range(n):</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; board[i][i] = '*'</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; board[n - i - 1][i] = '*'</p>
+<p></p>
+<p>&nbsp; &nbsp; return board</p></body></html>

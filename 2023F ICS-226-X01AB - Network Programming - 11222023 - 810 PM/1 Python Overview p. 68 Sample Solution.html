@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html><head></head><body style="color: rgb(32, 33, 34); font-family: verdana, sans-serif; font-size: 12px;"><p>def out_of_order(lst: [int]) -&gt; [int]:</p>
+<p>&nbsp; &nbsp; new_lst = []</p>
+<p>&nbsp; &nbsp; if len(lst) &lt; 2:</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; return new_lst</p>
+<p></p>
+<p>&nbsp; &nbsp; curr = lst[0]</p>
+<p>&nbsp; &nbsp; for i in lst[1:]:</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; if curr &lt;= i:</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; new_lst.append(i)</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; else:</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; curr = i</p>
+<p></p>
+<p>&nbsp; &nbsp; return new_lst</p>
+<p></p>
+<hr>
+<p></p>
+<p>def create_asterisks(lst: [int]) -&gt; [str]:</p>
+<p>&nbsp; &nbsp; new_lst = []</p>
+<p>&nbsp; &nbsp; for i in lst:</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; if i &gt; 0:</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; new_lst.append('*' * i)</p>
+<p></p>
+<p>&nbsp; &nbsp; return new_lst</p>
+<p></p>
+<hr>
+<p></p>
+<p>def create_asterisks(lst: [int]) -&gt; [str]:</p>
+<p>&nbsp; &nbsp; return ['*' * i for i in lst if i &gt; 0]</p>
+<p></p>
+<p></p></body></html>

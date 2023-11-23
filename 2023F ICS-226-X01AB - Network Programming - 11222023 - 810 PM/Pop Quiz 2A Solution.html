@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html><head></head><body style="color: rgb(32, 33, 34); font-family: verdana, sans-serif; font-size: 12px;"><p>#!/usr/bin/python3.11</p>
+<pre>from socket import socket, AF_INET, SOCK_STREAM, SOL_SOCKET, SO_REUSEADDR
+from struct import pack, unpack
+
+def receive(sc, size):
+    data = b''
+    while len(data) &lt; size:
+        curr_data = sc.recv(size - len(data))
+        if curr_data == b'':
+            return data
+
+        data += curr_data
+
+    return data
+
+
+SHORT = 2
+HOST = '127.0.0.1'
+PORT = 12345
+total = 0
+with socket(AF_INET, SOCK_STREAM) as sock:
+    sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+    sock.bind((HOST, PORT))
+    sock.listen(1)
+    while True:
+        sc, _ = sock.accept()
+        with sc:
+            data = receive(sc, SHORT)
+            if len(data) != SHORT:
+                continue
+
+            number = unpack('!H', data)[0]
+            total += number
+            print(number, total)
+            sc.sendall(pack('!Q', total))
+ 
+</pre></body></html>
