@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html><head></head><body style="color: rgb(32, 33, 34); font-family: verdana, sans-serif; font-size: 12px;"><p>The following is a listing of changed Game.py code. &nbsp;The rest of the Game class is the same as in Lab 5.</p>
+<p></p>
+<pre>    async def _send_msg(self, <strong>writer: StreamWriter</strong>, msg: bytes) -&gt; None:
+        """
+        Sends the given message over the given connection, prefaced by a size header.
+
+        Message length must fit into a short integer.
+       <strong> :param writer: The writer to use to send data to a client</strong>
+        :param msg: The message to transmit
+        """
+        payload = msg
+        header = pack('!H', len(payload))
+        segment = header + payload
+        self.logger.debug(f'Sending {segment}')
+      <strong>  writer.write(segment)
+        await writer.drain()</strong>
+
+    async def _interact_with_client(self, <strong>reader: StreamReader, writer: StreamWriter</strong>) -&gt; None:
+        """
+<strong>        Implement the commands received via the reader and send back the results via the writer.</strong>
+
+        Format is:
+        ______00
+        4 bits for the command (U is 0010, L is 0100, R is 0110, D is 0011, Q is 1000, G is 1111)
+        2 bits for the player (Player 1 is 01 and Player 2 is 10) to whom the movement command applies
+        2 0 bits
+
+        <strong>:param reader: The reader to use to receive data from a client
+        :param writer: The writer to use to send data to a client</strong>
+        """
+        try:
+            self.num_clients += 1
+            client_id = self.num_clients
+            if self.num_clients &gt; self.MAX_PLAYERS:
+                <strong>writer.close()</strong>
+                <strong>await writer.wait_closed()</strong>
+                return
+
+            <strong>addr = writer.get_extra_info('peername')
+            await self._send_msg(writer, pack('!B', client_id))</strong>
+            while True:
+               <strong> data = await reader.readexactly(self.BUF_SIZE)</strong>
+                self.logger.debug(f'Client: {client_id}_{addr} Data: {data.hex()}')
+                if data == b'':
+                    break
+
+                if (reply := self._is_game_over()) != b'':
+                    <strong>await self._send_msg(writer, reply)</strong>
+                    continue
+
+                cmd = int.from_bytes(data, byteorder='little')
+                if (reply := self._implement_command(cmd)) != b'':
+                    <strong>await self._send_msg(writer, reply)</strong>
+                    continue
+        except Exception as details:
+            self.logger.warning(details)
+
+    async def start(self) -&gt; None:
+        """
+        Start the server and process incoming connections.
+        """
+       <strong> server = await start_server(self._interact_with_client, '', constants.PORT)
+        await server.serve_forever()  # without this, the program terminates
+
+  </strong></pre>
+<p></p></body></html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html><head></head><body style="color: rgb(32, 33, 34); font-family: verdana, sans-serif; font-size: 12px;"><pre>#!/usr/bin/python3.11
+from socket import socket, AF_INET, SOCK_STREAM, SOL_SOCKET, SO_REUSEADDR
+
+BUF_SIZE = 1
+HOST = '127.0.0.1'
+PORT = 65432
+with socket(AF_INET, SOCK_STREAM) as sock:
+    sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+    sock.bind((HOST, PORT))
+    sock.listen(1)
+    print('Server:', sock.getsockname())
+    while True:
+        sc, _ = sock.accept()
+        with sc:
+            # Receive the input from the client
+            data = sc.recv(BUF_SIZE)
+
+            # Convert the data to a bit string
+            number = int.from_bytes(data, byteorder='big')
+            bit_string = '{0:b}'.format(number)
+            print(bit_string)
+
+            # Figure out which bits are set
+            for p in range(8):
+                print(f'Bit {p} is {1 if number &amp; 2 ** p &gt; 0 else 0}')
+
+            # Figure out if all four top bits are set
+            if number &amp; 0xf0 == 0xf0:
+                print('All four top bits are set')
+
+            # Send the result to the client
+            sc.sendall(b'You sent: ' + bit_string.encode() + b'\n')
+</pre></body></html>

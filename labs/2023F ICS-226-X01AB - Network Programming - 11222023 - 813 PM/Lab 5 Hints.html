@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html><head></head><body style="color: rgb(32, 33, 34); font-family: verdana, sans-serif; font-size: 12px;"><p>If you are still having issues getting the tests to pass, please take a look at the sample_run using Wireshark. &nbsp;Overall, the following takes place:</p>
+<pre>Server:
+Transmits 0x00 0x01 indicating that the next transmission is 1 byte long
+Then transmits the player ID, either 0x01 or 0x02
+
+                                * Client:
+				  Transmits one of 0x24, 0x34, 0x44, 0x64, 0xf4, 0x84 if player 1
+				  OR Transmits one of 0x28, 0x38, 0x48, 0x68, 0xf8, 0x88 if player 2
+
+Server:
+Transmits an unsigned short (2 bytes) indicating the size of the next segment
+Then transmits the score of player 1 and the score of player 2 (4 bytes total)
+Furthermore, transmits the board, if the Client sent a 0xf4 or 0xf8
+
+                                Client:
+				Repeats at * above	  
+</pre></body></html>

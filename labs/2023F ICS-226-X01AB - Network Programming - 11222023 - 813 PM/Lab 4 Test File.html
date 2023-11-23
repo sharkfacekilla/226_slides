@@ -1,0 +1,5 @@
+<!DOCTYPE html>
+<html><head></head><body style="color: rgb(32, 33, 34); font-family: verdana, sans-serif; font-size: 12px;"><p>To summarize how test_server.py works</p>
+<p>If player 1 is located below player 2, player 1 is moved to the bottom left corner and player 2 to the top right corner. &nbsp;Then player 2 is moved along the top row to the left. Finally, player 1 sweeps every tile by going all the way right, then one up, then all the way left, then one up, etc.</p>
+<p>If player 2 is located below player 1, player 2 is moved to the bottom left corner and player 1 to the top right corner. &nbsp;Then player 2 is moved all the way to the top left (yes, to board[0][0]). Finally, player 1 sweeps every tile by going as far to the left as possible, then one down, then all the way right, then one down, etc.</p>
+<p>When 1 sweeps the board, the score and board are checked for anomalies. &nbsp;Note that the test expects your board to look similar to Figure 2B (so there must be spaces between tiles).</p></body></html>
